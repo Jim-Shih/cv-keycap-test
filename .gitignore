@@ -97,3 +97,4 @@ yarn.lock
 # Directories used by tools like mocha, babel
 lib/
 test/
+backend/__pycache__/
