@@ -4,4 +4,4 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 RUN pip install opencv-python-headless
 COPY . .
-CMD ["python", "api_server.py"]
+CMD python api_server.py
