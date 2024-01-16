@@ -5,7 +5,7 @@ services:
       context: frontend
       dockerfile: Dockerfile-frontend
     ports:
-      - 8080:8080
+      - ${VUE_APP_FRONTEND_PORT}:8080
     volumes:
       - ./frontend:/app
     healthcheck:
@@ -13,6 +13,8 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
+    env_file:
+      - .env
     networks:
       - my-network
 
@@ -21,7 +23,7 @@ services:
       context: backend
       dockerfile: Dockerfile-backend
     ports:
-      - 8000:8000
+      - ${VUE_APP_BACKEND_PORT}:8000
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000"]
       interval: 30s
@@ -29,6 +31,8 @@ services:
       retries: 5
     volumes:
       - ./backend:/app
+    env_file:
+      - .env
     networks:
       - my-network
 
