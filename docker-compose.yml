@@ -1,9 +1,11 @@
 version: "3.8"
 services:
   frontend:
-    build:
-      context: frontend
-      dockerfile: Dockerfile-frontend
+    # build:
+    #   context: frontend
+    #   dockerfile: Dockerfile-frontend
+    image: jim732883/cv-keycap-test-frontend:v${VUE_APP_VERSION_NUMBER}
+
     ports:
       - ${VUE_APP_FRONTEND_PORT}:8080
     volumes:
@@ -19,9 +21,11 @@ services:
       - my-network
 
   backend:
-    build:
-      context: backend
-      dockerfile: Dockerfile-backend
+    # build:
+    #   context: backend
+    #   dockerfile: Dockerfile-backend
+    image: jim732883/cv-keycap-test-backend:v${VUE_APP_VERSION_NUMBER}
+
     ports:
       - ${VUE_APP_BACKEND_PORT}:8000
     healthcheck:
