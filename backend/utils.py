@@ -6,7 +6,7 @@ from PIL import Image
 from fastapi import HTTPException
 
 
-def check_if_its_base64(url: str):
+def _check_if_its_base64(url: str):
     """check if the image is base64 encoded"""
     if url.startswith("data:image"):
         return True
@@ -14,7 +14,7 @@ def check_if_its_base64(url: str):
         return False
 
 
-def decode_base64_to_image(base64_string: str):
+def _decode_base64_to_image(base64_string: str):
     # Convert Base64 string to bytes
     base64_string = base64_string.split(",")[1]
     image_bytes = base64.b64decode(base64_string)
@@ -27,11 +27,11 @@ def decode_base64_to_image(base64_string: str):
 
 def receiving_image(message: str):
     img = None
-    if (message is None) or (not check_if_its_base64(message)):
+    if (message is None) or (not _check_if_its_base64(message)):
         raise HTTPException(status_code=400, detail="Please provide base64_string")
     print("received base64_string: ", message[:10])
     # decode the image from base64 to normal image
-    img = decode_base64_to_image(message)
+    img = _decode_base64_to_image(message)
     return img
 
 

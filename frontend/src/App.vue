@@ -20,6 +20,43 @@ axios.defaults.baseURL = `http://localhost:${backend_port}`;
 axios.defaults.headers.post["Content-Type"] = "application/json";
 axios.defaults.headers.post["Accept"] = "application/json";
 
+const checkHealth = function () {
+  axios
+    .get(`/api/v${version_number}/health_check`)
+    .then((response) => {
+      this.apiHealthStatus = response.data.status;
+      console.log(response.data);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+};
+
+const uploadImage = function (event) {
+  const file = event.target.files[0];
+  const reader = new FileReader();
+
+  reader.onload = () => {
+    this.uploadedImage = reader.result;
+    var base64Image = reader.result;
+    // Send the base64 encoded image to the server for processing
+    axios
+      .post(
+        `/api/v${version_number}/preprocessing`,
+        JSON.stringify({ base64_string: base64Image }),
+      )
+      .then((response) => {
+        this.processedImage =
+          "data:image/png;base64," + response.data.processedImage;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  reader.readAsDataURL(file);
+};
+
 export default {
   data() {
     return {
@@ -29,41 +66,8 @@ export default {
     };
   },
   methods: {
-    checkHealth() {
-      axios
-        .get(`/api/v${version_number}/health_check`)
-        .then((response) => {
-          this.apiHealthStatus = response.data.status;
-          console.log(response.data);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    },
-    uploadImage(event) {
-      const file = event.target.files[0];
-      const reader = new FileReader();
-
-      reader.onload = () => {
-        this.uploadedImage = reader.result;
-        var base64Image = reader.result;
-        // Send the base64 encoded image to the server for processing
-        axios
-          .post(
-            `/api/v${version_number}/preprocessing`,
-            JSON.stringify({ base64_string: base64Image }),
-          )
-          .then((response) => {
-            this.processedImage =
-              "data:image/png;base64," + response.data.processedImage;
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-      };
-
-      reader.readAsDataURL(file);
-    },
+    checkHealth,
+    uploadImage,
   },
 };
 </script>
