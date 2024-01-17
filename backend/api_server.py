@@ -6,6 +6,7 @@ from model import cropping_image, image_blurred, canny_edge_detection
 from utils import receiving_image, encode_image_to_base64
 import uvicorn
 import os
+
 # read the port from environment variable
 backend_port = int(os.environ.get("VUE_APP_BACKEND_PORT", 8000))
 frontend_port = int(os.environ.get("VUE_APP_FRONTEND_PORT", 8080))

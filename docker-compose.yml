@@ -1,43 +1,43 @@
 version: "3.8"
 services:
-  frontend:
-    build:
-      context: frontend
-      dockerfile: Dockerfile-frontend
-    # image: jim732883/cv-keycap-test-frontend:v${VUE_APP_VERSION_NUMBER}
-    ports:
-      - ${VUE_APP_FRONTEND_PORT}:8080
-    volumes:
-      - ./frontend:/app
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-    env_file:
-      - .env
-    networks:
-      - my-network
+    frontend:
+        build:
+            context: frontend
+            dockerfile: Dockerfile-frontend
+        # image: jim732883/cv-keycap-test-frontend:v${VUE_APP_VERSION_NUMBER}
+        ports:
+            - ${VUE_APP_FRONTEND_PORT}:8080
+        volumes:
+            - ./frontend:/app
+        healthcheck:
+            test: ["CMD", "curl", "-f", "http://localhost:8080"]
+            interval: 30s
+            timeout: 10s
+            retries: 5
+        env_file:
+            - .env
+        networks:
+            - my-network
 
-  backend:
-    build:
-       context: backend
-       dockerfile: Dockerfile-backend
-#    image: jim732883/cv-keycap-test-backend:v${VUE_APP_VERSION_NUMBER}
-    ports:
-      - ${VUE_APP_BACKEND_PORT}:8000
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-    volumes:
-      - ./backend:/app
-    env_file:
-      - .env
-    networks:
-      - my-network
+    backend:
+        build:
+            context: backend
+            dockerfile: Dockerfile-backend
+        #    image: jim732883/cv-keycap-test-backend:v${VUE_APP_VERSION_NUMBER}
+        ports:
+            - ${VUE_APP_BACKEND_PORT}:8000
+        healthcheck:
+            test: ["CMD", "curl", "-f", "http://localhost:8000"]
+            interval: 30s
+            timeout: 10s
+            retries: 5
+        volumes:
+            - ./backend:/app
+        env_file:
+            - .env
+        networks:
+            - my-network
 
 networks:
-  my-network:
-    name: my-network
+    my-network:
+        name: my-network
