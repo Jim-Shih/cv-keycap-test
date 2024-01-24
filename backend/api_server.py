@@ -1,17 +1,17 @@
-from fastapi import FastAPI, HTTPException
+import os
+from typing import Optional
+
+import uvicorn
+from backend_utils import encode_image_to_base64, receiving_image
+from canny_model import canny_edge_detection, cropping_image, image_blurred
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from typing import Optional
-from model import cropping_image, image_blurred, canny_edge_detection
-from utils import receiving_image, encode_image_to_base64
-import uvicorn
-import os
 
 # read the port from environment variable
 backend_port = int(os.environ.get("VUE_APP_BACKEND_PORT", 8000))
 frontend_port = int(os.environ.get("VUE_APP_FRONTEND_PORT", 8080))
 version_number = int(os.environ.get("VUE_APP_VERSION_NUMBER", 1))
-
 
 origins = [
     f"http://localhost:{frontend_port}",
@@ -49,7 +49,7 @@ async def preprocessing(message: ImageUrl):
     enhance the edges and encode the processed image to base64 string again"""
 
     if not message.base64_string:
-        raise HTTPException(status_code=400, detail="Please provide base64_string")
+        raise BaseException("please provide the base64 encoded image")
     else:
         img = receiving_image(message.base64_string)
 

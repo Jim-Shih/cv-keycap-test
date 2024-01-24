@@ -1,9 +1,10 @@
 import base64
 from io import BytesIO
+
 import cv2
 import numpy as np
-from PIL import Image
 from fastapi import HTTPException
+from PIL import Image
 
 
 def _check_if_its_base64(url: str):
@@ -28,7 +29,8 @@ def _decode_base64_to_image(base64_string: str):
 def receiving_image(message: str):
     img = None
     if (message is None) or (not _check_if_its_base64(message)):
-        raise HTTPException(status_code=400, detail="Please provide base64_string")
+        raise HTTPException(status_code=400,
+                            detail="Please provide base64_string")
     print("received base64_string: ", message[:10])
     # decode the image from base64 to normal image
     img = _decode_base64_to_image(message)

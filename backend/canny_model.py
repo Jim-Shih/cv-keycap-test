@@ -11,15 +11,14 @@ def read_image(image_path, mode=0):
 
 def cropping_image(image, x, y, w, h):
     """Cropping image"""
-    cropped = image[y : y + h, x : x + w]
+    cropped = image[y:y + h, x:x + w]
     return cropped
 
 
 def image_blurred(image, kernel_size=3):
     """Blurred image, default kernel size is (3,3)"""
-    filtering_kernel = (
-        np.ones((kernel_size, kernel_size), np.float32) / kernel_size**2
-    )
+    filtering_kernel = (np.ones(
+        (kernel_size, kernel_size), np.float32) / kernel_size**2)
     blurred = cv2.filter2D(image, -1, filtering_kernel)
     return blurred
 
